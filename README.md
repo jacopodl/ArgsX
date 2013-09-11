@@ -3,6 +3,19 @@ ArgsX
 
 ArgsX is a simple c/c++ options parser with simple syntax, ArgsX supports long and short options.
 
+ArgsX function
+--------------
+```c++
+    int ArgsX(
+	int Argc, // argc parameter
+	char **Argv, // argv parameter
+	int *arg_ptr, // index to argv pointer
+	char *Opt, // pointer to short options string
+	struct _ArgsX_LongOpt *Lopt, // pointer to long options struct
+	char tr // Option trigger Eg: -
+	);
+```
+
 Usage with short options
 ------------------------
 ```c++
@@ -34,8 +47,8 @@ Usage with short options
     }
 ```
     a -> No arg required
-    b -> arg required
-    c -> more args required (2 or plus) Eg: -c arg1 arg2 arg3 ...
+    b -> Arg required
+    c -> More args required (2 or plus) Eg: -c arg1 arg2 arg3 ...
 
 Usage with long options
 -----------------------
@@ -111,8 +124,10 @@ Usage with long options (alias)
 ```
 Change option trigger
 ---------------------
+```c++
     ArgsX(argc,argv,&index,(char *)"m",null,'-')
                                              ^ Option trigger
+```
                                              
 Example
 -------
