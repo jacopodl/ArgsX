@@ -48,7 +48,7 @@ Usage with short options
 ```
     a -> No arg required
     b -> Arg required
-    c -> More args required (2 or plus) Eg: -c arg1 arg2 arg3 ...
+    c -> More args required (2 or more) Eg: -c arg1 arg2 arg3 ...
 
 Usage with long options
 -----------------------
