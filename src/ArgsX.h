@@ -59,7 +59,7 @@ int ArgsX(int Argc,char **Argv,int *arg_ptr,char *Opt,struct _ArgsX_LongOpt *Lop
                     {
                         return ret;
                     }
-                    else if(++*arg_ptr<Argc)
+                    else if(++*arg_ptr<Argc&&*Argv[*arg_ptr]!=tr)
                     {
                         if(Lopt[i].Args==_ARGSX_OPT_REQUIRED_ARGUMENT)
                         {
@@ -101,9 +101,12 @@ int ArgsX(int Argc,char **Argv,int *arg_ptr,char *Opt,struct _ArgsX_LongOpt *Lop
                             {
                                 if(*Argv[i]!=tr)
                                     ArgsX_ArgPtr=i;
+                                else
+                                    break;
                             }
                         }
-                         ArgsX_ArgPtr=*arg_ptr;
+                        else
+                            ArgsX_ArgPtr=*arg_ptr;
                     }
                     else
                         return _ARGSX_LowArg;
