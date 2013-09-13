@@ -127,7 +127,7 @@ Change option trigger
 ---------------------
 ```c++
     ArgsX(argc,argv,&index,(char *)"m",null,sizeof(MyOpt),'-');
-    ArgsX(...,...,...,...,...,...,'-'); '-' -> '?' or other char...
+    ArgsX(...,...,...,...,...,...,'-'); // '-' -> '?' or other char...
                                              		   
 ```
                                              
