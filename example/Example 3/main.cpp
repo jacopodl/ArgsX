@@ -32,7 +32,6 @@ int main(int argc,char **argv)
             {
                 cout<<atoi(argv[ArgsX_ArgPtr])*-1<<endl;
             }
-            return 0;
             break;
         case 's':
             base=exp=0;
