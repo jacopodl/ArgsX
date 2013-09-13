@@ -39,7 +39,7 @@ struct _ArgsX_LongOpt
 int ArgsX_ArgPtr=-1,
     ArgsX_LOpt_ptr=-1;
 
-int ArgsX(int Argc,char **Argv,int *arg_ptr,char *Opt,struct _ArgsX_LongOpt *Lopt,char tr)
+int ArgsX(int Argc,char **Argv,int *arg_ptr,char *Opt,struct _ArgsX_LongOpt *Lopt,unsigned Lopt_size,char tr)
 {
     if(*arg_ptr>=Argc)
         return _ARGSX_FINISH;
@@ -49,7 +49,7 @@ int ArgsX(int Argc,char **Argv,int *arg_ptr,char *Opt,struct _ArgsX_LongOpt *Lop
         if(*++Argv[*arg_ptr]==tr&&Lopt!=0)
         {
             Argv[*arg_ptr]++;
-            for(unsigned i=0;i<(sizeof(Lopt)/3);i++)
+            for(unsigned i=0;i<(Lopt_size/sizeof(_ArgsX_LongOpt));i++)
             {
                 if(strcmp(Lopt[i].name,Argv[*arg_ptr])==0)
                 {

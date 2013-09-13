@@ -1,6 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
-#include "ArgsX.h"
+#include "../../src/ArgsX.h"
 
 using namespace std;
 
@@ -23,7 +23,7 @@ int main(int argc,char **argv)
     int index=1,
         returnchar=-1;
 
-    while((returnchar=ArgsX(argc,argv,&index,(char *)"i",MyOpt,'-'))!=-1)
+    while((returnchar=ArgsX(argc,argv,&index,(char *)"i",MyOpt,sizeof(MyOpt),'-'))!=-1)
     {
         switch(returnchar)
         {
