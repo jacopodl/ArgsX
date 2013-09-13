@@ -126,8 +126,9 @@ Usage with long options (alias)
 Change option trigger
 ---------------------
 ```c++
-    ArgsX(argc,argv,&index,(char *)"m",null,sizeof(MyOpt),'-')
-                                             		   ^ Option trigger
+    ArgsX(argc,argv,&index,(char *)"m",null,sizeof(MyOpt),'-');
+    ArgsX(...,...,...,...,...,...,'-'); '-' -> '?' or other char...
+                                             		   
 ```
                                              
 Example
