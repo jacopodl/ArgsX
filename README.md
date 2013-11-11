@@ -1,7 +1,7 @@
 ArgsX
 =====
 
-ArgsX is a simple c/c++ options parser with simple syntax, ArgsX supports long and short options.
+ArgsX is a simple C/C++ options parser with simple syntax, ArgsX supports long and short options.
 
 ArgsX function
 --------------
@@ -9,7 +9,7 @@ ArgsX function
     int ArgsX(
 	int Argc, // argc parameter
 	char **Argv, // argv parameter
-	int *arg_ptr, // index to argv pointer
+	int *arg_ptr, // argv position
 	char *Opt, // pointer to short options string
 	struct _ArgsX_LongOpt *Lopt, // pointer to long options struct
 	unsigned Lopt_size, // size of long options struct
