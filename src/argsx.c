@@ -83,6 +83,12 @@ int argsx(int argc, char **argv, char *opt, ax_lopt *lopt, unsigned short lopt_s
 			{
 				if (ax_cursor + cmpd_arg >= argc || *argv[ax_cursor + cmpd_arg] == tr)
 				{
+					if (strlen(ax_curr + 1) > 0)
+					{
+						ax_arg = ax_curr+1;
+						ax_cursor++;
+						return ret;
+					}
 					if (ax_opterr)
 						fprintf(stderr, "Option -%c requires an argument\n", *ax_curr);
 					ax_etype = short_opt;
