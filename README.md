@@ -7,130 +7,48 @@ ArgsX function
 --------------
 ```c++
     int ArgsX(
-	int Argc, // argc parameter
-	char **Argv, // argv parameter
-	int *arg_ptr, // argv position
-	char *Opt, // pointer to short options string
-	struct _ArgsX_LongOpt *Lopt, // pointer to long options struct
-	unsigned Lopt_size, // size of long options struct
+	int argc, // argc parameter
+	char **argv, // argv parameter
+	char *opt, // pointer to short options string
+	ax_lopt *lopt, // pointer to long options struct
+	unsigned short lopt_size, // size of long options struct
 	char tr // Option trigger Eg: -
 	);
 ```
-
-Usage with short options
-------------------------
-```c++
-    int index=1,Rchar=-1;
-    while((Rchar=ArgsX(argc,argv,&index,(char *)"ab+c++",null,0,'-'))!=-1)
-    {
-      switch(returnchar)
-      {
-        case 'a':
-        ...
-        break;
-        case 'b':
-        ...
-        break;
-        case 'c':
-        ...
-        break;
-        case _ARGSX_BadArg:
-        ...
-        break;
-        case _ARGSX_LowArg:
-        ...
-        break;
-        default:
-        ...
-        break;
-      }
-      index++;
-    }
-```
-    a -> No arg required
-    b -> Arg required
-    c -> More args required (2 or more) Eg: -c arg1 arg2 arg3 ...
-
-Usage with long options
------------------------
-```c++
-    _ArgsX_LongOpt MyOpt[]={{"repeat",_ARGSX_OPT_NO_ARGUMENTS,0},
-                            {"invert",_ARGSX_OPT_REQUIRED_ARGUMENT,0},
-                            {"make",_ARGSX_OPT_REQUIRES_MORE_ARGUMENTS,0}};
-    int index=1,Rchar=-1;
-    while((Rchar=ArgsX(argc,argv,&index,(char *)"a",MyOpt,sizeof(MyOpt),'-'))!=-1)
-    {
-      switch(returnchar)
-      {
-        case _ARGSX_LongOption:
-            if(ArgsX_LOpt_ptr==0)
-            {
-                ...
-            }
-            else if(ArgsX_LOpt_ptr==1)
-                ...
-            else
-                ...
-        break;
-        case 'a':
-        ...
-        break;
-        case _ARGSX_BadArg:
-        ...
-        break;
-        case _ARGSX_LowArg:
-        ...
-        break;
-        default:
-        ...
-        break;
-      }
-      index++;
-    }
-```
-Usage with long options (alias)
+Usage:
 -------------------------------
 ```c++
-    _ArgsX_LongOpt MyOpt[]={{"repeat",_ARGSX_OPT_NO_ARGUMENTS,0},
-                            {"invert",_ARGSX_OPT_REQUIRED_ARGUMENT,0},
-                            {"make",_ARGSX_OPT_REQUIRES_MORE_ARGUMENTS,'m'}};
-    int index=1,Rchar=-1;
-    while((Rchar=ArgsX(argc,argv,&index,(char *)"m++",MyOpt,sizeof(MyOpt),'-'))!=-1)
+    ax_lopt MyOpt[]={{"repeat",ARGSX_NOARG,0},
+                            {"invert",ARGSX_REQ_ARG,0},
+                            {"make",ARGSX_REQ_ARG,'m'}};
+    int Rchar=-1;
+    while((Rchar=ArgsX(argc,argv,(char *)"m++",MyOpt,sizeof(MyOpt),'-'))!=-1)
     {
-      switch(returnchar)
+      switch(Rchar)
       {
-        case _ARGSX_LongOption:
-            if(ArgsX_LOpt_ptr==0)
+        case ARGSX_LOPT:
+            if(ax_loptidx==0)
             {
                 ...
             }
-            else if(ArgsX_LOpt_ptr==1)
+            else if(ax_loptidx==1)
                 ...
         break;
         case 'm':
         // -m or --make
         break;
-        case _ARGSX_BadArg:
+        case ARGSX_BAD_OPT:
         ...
         break;
-        case _ARGSX_LowArg:
+        case ARGSX_FEW_ARGS:
         ...
         break;
-        default:
+        case ARGSX_NONOPT:
         ...
         break;
       }
-      index++;
     }
-```
-Change option trigger
----------------------
-```c++
-    ArgsX(argc,argv,&index,(char *)"m",null,sizeof(MyOpt),'-');
-    ArgsX(...,...,...,...,...,...,'-'); // '-' -> '?' or other char...
-                                             		   
-```
-                                             
+                                   
 Example
 -------
 See example in example/ directory
