@@ -22,7 +22,7 @@ Usage:
                             {"invert",ARGSX_REQ_ARG,0},
                             {"make",ARGSX_REQ_ARG,'m'}};
     int Rchar=-1;
-    while((Rchar=ArgsX(argc,argv,(char *)"m++",MyOpt,sizeof(MyOpt),'-'))!=-1)
+    while((Rchar=ArgsX(argc,argv,(char *)"m!",MyOpt,sizeof(MyOpt),'-'))!=-1)
     {
       switch(Rchar)
       {
