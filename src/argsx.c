@@ -53,7 +53,10 @@ int argsx(int argc, char **argv, char *opt, ax_lopt *lopt, unsigned short lopt_s
 					int ret = ((int)lopt[i].opt == 0) ? ARGSX_LOPT : ((int)lopt[i].opt);
 					ax_loptidx = i;
 					if (lopt[i].args == ARGSX_NOARG)
+					{
+						ax_cursor++;
 						return ret;
+					}
 					else
 					{
 						ax_cursor++;
