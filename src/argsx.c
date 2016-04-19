@@ -22,12 +22,12 @@
 
 #include "argsx.h"
 
-char *ax_curr;				// Pointer to current position string
-char *ax_arg;				// Pointer to arg
-int ax_cursor = 1;			// Current position
-int ax_opterr = 1;			// Show errors
-short ax_etype = -1;		// Error type
-unsigned short ax_loptidx;	// Long options index
+char *ax_curr;					// Pointer to current position string
+char *ax_arg;					// Pointer to arg
+int ax_cursor = 1;				// Current position
+int ax_opterr = 1;				// Show errors
+ax_einfo ax_etype = no_err;		// Error type
+unsigned short ax_loptidx;		// Long options index
 
 
 int argsx(int argc, char **argv, char *opt, struct ax_lopt *lopt, unsigned short lopt_size, char tr)

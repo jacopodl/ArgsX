@@ -22,11 +22,25 @@
 #define ARGSX_VERSION_MAJOR 		@VERSION_MAJOR@
 #define ARGSX_VERSION_MINOR			@VERSION_MINOR@
 
+struct ax_lopt
+{
+    char *name;
+    int args;
+    char opt;
+};
+
+typedef enum ax_einfo
+{
+	no_err=-1,
+	short_opt=0,
+	long_opt=1
+}ax_einfo;
+
 extern char *ax_curr;				// Pointer to current position string
 extern char *ax_arg;				// Pointer to arg
 extern int ax_cursor;				// Current position
 extern int ax_opterr;				// Show errors
-extern short ax_etype;				// Error type
+extern ax_einfo ax_etype;			// Error type
 extern unsigned short ax_loptidx;	// Long options index
 
 /* Switch constant */
@@ -38,19 +52,6 @@ extern unsigned short ax_loptidx;	// Long options index
 /* ax_lopt mode */
 #define ARGSX_NOARG		0x00
 #define ARGSX_REQ_ARG	0x01
-
-struct ax_lopt
-{
-    char *name;
-    int args;
-    char opt;
-};
-
-enum ax_einfo
-{
-	short_opt,
-	long_opt
-};
 
 /* prototype */
 int argsx(int argc, char **argv, char *opt, struct ax_lopt *lopt, unsigned short lopt_size,char tr);
