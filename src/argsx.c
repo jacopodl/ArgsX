@@ -1,6 +1,6 @@
 /*
 	* <ArgsX, The simple C/C++ options parser.>
-	* Copyright (C) <2014-2015> <Jacopo De Luca>
+	* Copyright (C) <2014-2016> <Jacopo De Luca>
 	*
 	* This program is free software: you can redistribute it and/or modify
 	* it under the terms of the GNU General Public License as published by
@@ -22,15 +22,15 @@
 
 #include "argsx.h"
 
-char *ax_curr; // Pointer to current position string
-char *ax_arg; // Pointer to arg
-int ax_cursor = 1; // Current position
-int ax_opterr = 1; // Show errors
-short ax_etype = -1; // Error type
-unsigned short ax_loptidx; // Long options index
+char *ax_curr;				// Pointer to current position string
+char *ax_arg;				// Pointer to arg
+int ax_cursor = 1;			// Current position
+int ax_opterr = 1;			// Show errors
+short ax_etype = -1;		// Error type
+unsigned short ax_loptidx;	// Long options index
 
 
-int argsx(int argc, char **argv, char *opt, ax_lopt *lopt, unsigned short lopt_size, char tr)
+int argsx(int argc, char **argv, char *opt, struct ax_lopt *lopt, unsigned short lopt_size, char tr)
 {
 	static unsigned short cmpd_arg = 1;
 	static unsigned short cmpd_opt = 0;
@@ -46,7 +46,7 @@ int argsx(int argc, char **argv, char *opt, ax_lopt *lopt, unsigned short lopt_s
 			/* Long */
 			ax_curr++;
 			unsigned short i;
-			for (i = 0; i < (lopt_size / sizeof(ax_lopt)); i++)
+			for (i = 0; i < (lopt_size / sizeof(struct ax_lopt)); i++)
 			{
 				if (strcmp(lopt[i].name, ax_curr) == 0)
 				{
