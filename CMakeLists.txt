@@ -6,7 +6,7 @@ set (VERSION_MINOR 5)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --pedantic")
 
-set(LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/bin")
+set(DEFAULT_INSTALL_PATH "${PROJECT_SOURCE_DIR}/bin")
 set(INCLUDE_PATH "${PROJECT_SOURCE_DIR}/include")
 
 add_subdirectory(src)
