@@ -1,6 +1,6 @@
 /*
-	* <ArgsX, The simple C/C++ options parser.>
-	* Copyright (C) <2014-2016> <Jacopo De Luca>
+	* ArgsX, The simple C/C++ options parser.
+	* Copyright (C) 2014-2016 Jacopo De Luca
 	*
 	* This program is free software: you can redistribute it and/or modify
 	* it under the terms of the GNU General Public License as published by

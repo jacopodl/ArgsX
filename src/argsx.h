@@ -1,6 +1,6 @@
 /*
-	* <ArgsX, The simple C/C++ options parser.>
-	* Copyright (C) <2014-2016> <Jacopo De Luca>
+	* ArgsX, The simple C/C++ options parser.
+	* Copyright (C) 2014-2016 Jacopo De Luca
 	*
 	* This program is free software: you can redistribute it and/or modify
 	* it under the terms of the GNU General Public License as published by
@@ -22,12 +22,12 @@
 #define ARGSX_VERSION_MAJOR 		@VERSION_MAJOR@
 #define ARGSX_VERSION_MINOR			@VERSION_MINOR@
 
-struct ax_lopt
+typedef struct ax_lopt
 {
     char *name;
     int args;
     char opt;
-};
+}ax_lopt;
 
 typedef enum ax_einfo
 {
