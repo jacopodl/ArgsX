@@ -1,6 +1,6 @@
 /*
-	* ArgsX, The simple C/C++ options parser.
-	* Copyright (C) 2014-2016 Jacopo De Luca
+	* ArgsX, Simple C/C++ options parser.
+	* Copyright (C) 2014-2017 Jacopo De Luca
 	*
 	* This program is free software: you can redistribute it and/or modify
 	* it under the terms of the GNU General Public License as published by
@@ -22,102 +22,82 @@
 
 #include "argsx.h"
 
-char *ax_curr;					// Pointer to current position string
-char *ax_arg;					// Pointer to arg
-int ax_cursor = 1;				// Current position
-int ax_opterr = 1;				// Show errors
-ax_einfo ax_etype = no_err;		// Error type
-unsigned short ax_loptidx;		// Long options index
+char *ax_curr;
+char *ax_arg;
+int ax_cursor = 1;
+int ax_opterr = 1;
+ax_einfo ax_etype = no_err;
+short ax_loptidx;
 
 
-int argsx(int argc, char **argv, char *opt, struct ax_lopt *lopt, unsigned short lopt_size, char tr)
-{
-	static unsigned short cmpd_arg = 1;
-	static unsigned short cmpd_opt = 0;
+int argsx(int argc, char **argv, char *opt, struct ax_lopt *lopt, unsigned short lopt_size, char tr) {
+    static unsigned short cmpd_arg = 1;
+    static unsigned short cmpd_opt = 0;
+    char *subopt;
+    int ret;
+    size_t len;
 
-	ax_curr = argv[ax_cursor];
-	if (ax_cursor >= argc)
-		return -1;
+    ax_curr = argv[ax_cursor];
+    if (ax_cursor >= argc)
+        return -1;
 
-	if (*ax_curr == tr)
-	{
-		if (*++ax_curr == tr&&lopt != NULL)
-		{
-			/* Long */
-			ax_curr++;
-			unsigned short i;
-			for (i = 0; i < (lopt_size / sizeof(struct ax_lopt)); i++)
-			{
-				if (strcmp(lopt[i].name, ax_curr) == 0)
-				{
-					int ret = ((int)lopt[i].opt == 0) ? ARGSX_LOPT : ((int)lopt[i].opt);
-					ax_loptidx = i;
-					if (lopt[i].args == ARGSX_NOARG)
-					{
-						ax_cursor++;
-						return ret;
-					}
-					else
-					{
-						ax_cursor++;
-						if (ax_cursor >= argc || *argv[ax_cursor] == tr)
-						{
-							if (ax_opterr)
-								fprintf(stderr, "Option --%s requires an argument\n", ax_curr);
-							ax_etype = long_opt;
-							return ARGSX_FEW_ARGS;
-						}
-						ax_arg = argv[ax_cursor++];
-						return ret;
-					}
-				}
-			}
-			if (ax_opterr)
-				fprintf(stderr, "Illegal option: --%s\n", ax_curr);
-			ax_etype = long_opt;
-			return ARGSX_BAD_OPT;
-		}
-		/* Short */
-		ax_curr += cmpd_opt;
-		char *subopt, ret = *ax_curr;
-		if ((subopt = strchr(opt, *ax_curr)) != 0)
-		{
-			if (*++subopt == '!')
-			{
-				if (ax_cursor + cmpd_arg >= argc || *argv[ax_cursor + cmpd_arg] == tr)
-				{
-					if (strlen(ax_curr + 1) > 0 && cmpd_arg==1)
-					{
-						ax_arg = ax_curr+1;
-						ax_cursor++;
-						return ret;
-					}
-					if (ax_opterr)
-						fprintf(stderr, "Option -%c requires an argument\n", *ax_curr);
-					ax_etype = short_opt;
-					return ARGSX_FEW_ARGS;
-				}
-				ax_arg = argv[ax_cursor + cmpd_arg++];
-			}
-			unsigned len = strlen(ax_curr);
-			if (len > 1 && cmpd_opt < len)
-				cmpd_opt++;
-			else
-			{
-				ax_cursor += cmpd_arg;
-				cmpd_arg = 1;
-				cmpd_opt = 0;
-			}
-			return ret;
-		}
-		else
-		{
-			if (ax_opterr)
-				fprintf(stderr, "Illegal option: -%c\n", *ax_curr);
-			ax_etype = short_opt;
-			return ARGSX_BAD_OPT;
-		}
-	}
-	ax_arg = argv[ax_cursor++];
-	return ARGSX_NONOPT;
+    if (*ax_curr == tr) {
+        if (*++ax_curr == tr && lopt != NULL) {
+            ax_curr++;
+            for (short i = 0; i < (lopt_size / sizeof(struct ax_lopt)); i++) {
+                if (strcmp(lopt[i].name, ax_curr) == 0) {
+                    ret = (lopt[i].opt == 0) ? ARGSX_LOPT : lopt[i].opt;
+                    ax_loptidx = i;
+                    ax_cursor++;
+                    if (lopt[i].args == ARGSX_NOARG)
+                        return ret;
+                    if (ax_cursor >= argc || *argv[ax_cursor] == tr) {
+                        if (ax_opterr)
+                            fprintf(stderr, "Argument --%s expected one argument\n", ax_curr);
+                        ax_etype = long_opt;
+                        return ARGSX_FEW_ARGS;
+                    }
+                    ax_arg = argv[ax_cursor++];
+                    return ret;
+                }
+            }
+            if (ax_opterr)
+                fprintf(stderr, "Unrecognized argument: --%s\n", ax_curr);
+            ax_etype = long_opt;
+            return ARGSX_BAD_OPT;
+        }
+        ax_curr += cmpd_opt;
+        ret = *ax_curr;
+        if ((subopt = strchr(opt, *ax_curr)) != 0) {
+            if (*++subopt == '!') {
+                if (ax_cursor + cmpd_arg >= argc || *argv[ax_cursor + cmpd_arg] == tr) {
+                    if (strlen(ax_curr + 1) > 0 && cmpd_arg == 1) {
+                        ax_arg = ax_curr + 1;
+                        ax_cursor++;
+                        return ret;
+                    }
+                    if (ax_opterr)
+                        fprintf(stderr, "Argument -%c expected one argument\n", *ax_curr);
+                    ax_etype = short_opt;
+                    return ARGSX_FEW_ARGS;
+                }
+                ax_arg = argv[ax_cursor + cmpd_arg++];
+            }
+            len = strlen(ax_curr);
+            if (len > 1 && cmpd_opt <= len)
+                cmpd_opt++;
+            else {
+                ax_cursor += cmpd_arg;
+                cmpd_arg = 1;
+                cmpd_opt = 0;
+            }
+            return ret;
+        }
+        if (ax_opterr)
+            fprintf(stderr, "Unrecognized argument: -%c\n", *ax_curr);
+        ax_etype = short_opt;
+        return ARGSX_BAD_OPT;
+    }
+    ax_arg = argv[ax_cursor++];
+    return ARGSX_NONOPT;
 }

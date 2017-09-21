@@ -1,6 +1,6 @@
 /*
-	* ArgsX, The simple C/C++ options parser.
-	* Copyright (C) 2014-2016 Jacopo De Luca
+	* ArgsX, Simple C/C++ options parser.
+	* Copyright (C) 2014-2017 Jacopo De Luca
 	*
 	* This program is free software: you can redistribute it and/or modify
 	* it under the terms of the GNU General Public License as published by
@@ -19,40 +19,47 @@
 #ifndef ARGSX_H
 #define ARGSX_H
 
-#define ARGSX_VERSION_MAJOR 		@VERSION_MAJOR@
-#define ARGSX_VERSION_MINOR			@VERSION_MINOR@
+#define ARGSX_VERSION_MAJOR        @VERSION_MAJOR@
+#define ARGSX_VERSION_MINOR        @VERSION_MINOR@
+#define ARGSX_VERSION_PATCH        @VERSION_PATCH@
 
-typedef struct ax_lopt
-{
+typedef struct ax_lopt {
     char *name;
     int args;
     char opt;
-}ax_lopt;
+} ax_lopt;
 
-typedef enum ax_einfo
-{
-	no_err=-1,
-	short_opt=0,
-	long_opt=1
-}ax_einfo;
+typedef enum ax_einfo {
+    no_err = -1,
+    short_opt = 0,
+    long_opt = 1
+} ax_einfo;
 
-extern char *ax_curr;				// Pointer to current position string
-extern char *ax_arg;				// Pointer to arg
-extern int ax_cursor;				// Current position
-extern int ax_opterr;				// Show errors
-extern ax_einfo ax_etype;			// Error type
-extern unsigned short ax_loptidx;	// Long options index
+extern char *ax_curr;       // Pointer to current position string
+extern char *ax_arg;        // Pointer to arg
+extern int ax_cursor;       // Current position
+extern int ax_opterr;       // Show errors
+extern ax_einfo ax_etype;   // Error type
+extern short ax_loptidx;    // Long options index
 
 /* Switch constant */
-#define ARGSX_BAD_OPT	0xBA
-#define ARGSX_FEW_ARGS	0xFA
-#define ARGSX_NONOPT	0xCE
-#define ARGSX_LOPT		0xAA
+#define ARGSX_BAD_OPT   0xFF
+#define ARGSX_FEW_ARGS  0xFE
+#define ARGSX_NONOPT    0xFD
+#define ARGSX_LOPT      0xFC
 
 /* ax_lopt mode */
-#define ARGSX_NOARG		0x00
-#define ARGSX_REQ_ARG	0x01
+#define ARGSX_NOARG     0x00
+#define ARGSX_REQ_ARG   0x01
 
-/* prototype */
-int argsx(int argc, char **argv, char *opt, struct ax_lopt *lopt, unsigned short lopt_size,char tr);
+#ifdef __cplusplus
+extern "C" {
 #endif
+
+int argsx(int argc, char **argv, char *opt, struct ax_lopt *lopt, unsigned short lopt_size, char tr);
+
+#ifdef __cplusplus
+};
+#endif
+
+#endif  // ARGSX_H

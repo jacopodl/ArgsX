@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/version-1.6-green.svg)
+![](https://img.shields.io/badge/version-1.7.0-green.svg)
 [![GPLv3 License](https://img.shields.io/badge/license-GPL3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
 
 
@@ -11,12 +11,12 @@ ArgsX function
 --------------
 ```c++
     int ArgsX(
-	int argc,			// argc parameter
-	char **argv,			// argv parameter
-	char *opt,			// pointer to short options string
-	ax_lopt *lopt,			// pointer to long options struct
-	unsigned short lopt_size,	// size of long options struct
-	char tr				// Option trigger Eg: -
+	int argc,                   // argc parameter
+	char **argv,                // argv parameter
+	char *opt,                  // pointer to short options string
+	ax_lopt *lopt,              // pointer to long options struct
+	unsigned short lopt_size,   // size of long options struct
+	char tr                     // Trigger Eg: -
 	);
 ```
 Usage:
@@ -52,3 +52,4 @@ Usage:
         break;
       }
     }
+```
