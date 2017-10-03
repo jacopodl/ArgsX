@@ -37,7 +37,7 @@ For example, if your program require options 'a','b','c' without parameter and o
 	char tr                     // Trigger char Eg: '-'
 	);
 ```
-## put all together ##
+## Put all together ##
 ```c++
     struct ax_lopt long[] = {{"one", ARGSX_NOARG, 0},
 			 {"two", ARGSX_REQ_ARG, 1},
