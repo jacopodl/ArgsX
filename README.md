@@ -1,14 +1,32 @@
+![](https://img.shields.io/badge/Language-C-orange.svg)
 ![](https://img.shields.io/badge/version-1.7.0-green.svg)
 [![GPLv3 License](https://img.shields.io/badge/license-GPL3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
 
 
-ArgsX
-=====
+# ArgsX #
+Argsx is a easy to use command line option parser for C/C++ that support long and short option formats.
 
-ArgsX is a simple C/C++ options parser with simple syntax, ArgsX supports long and short options.
+# Overview #
+## Long option interface ##
+```c++
+struct ax_lopt {
+    char *name;	// Option
+    int args;	// Required parameter ?
+    char opt;	// Return value
+}
 
-ArgsX function
---------------
+struct ax_lopt long[] = {{"one", ARGSX_NOARG, 0},
+			 {"two", ARGSX_REQ_ARG, 1},
+			 {"three", ARGSX_NOARG, 't'}};
+```
+## Short option ##
+Short option required string formatted in this way:
+1. Single character like 'l' -> Option that dosn't require additional parameter.
+1. Single character followed by ! like 't!' -> Option that require additional parameter.
+
+For example, if your program require options 'a','b','c' without parameter and option 't' and 'e' with parameter you can write string like this: "abct!e!".
+
+## ArgsX function ##
 ```c++
     int ArgsX(
 	int argc,                   // argc parameter
@@ -16,39 +34,37 @@ ArgsX function
 	char *opt,                  // pointer to short options string
 	ax_lopt *lopt,              // pointer to long options struct
 	unsigned short lopt_size,   // size of long options struct
-	char tr                     // Trigger Eg: -
+	char tr                     // Trigger char Eg: '-'
 	);
 ```
-Usage:
-------
+## put all together ##
 ```c++
-    ax_lopt MyOpt[]={{"repeat",ARGSX_NOARG,0},
-                     {"invert",ARGSX_REQ_ARG,0},
-                     {"make",ARGSX_REQ_ARG,'m'}};
-    int Rchar=-1;
-    while((Rchar=ArgsX(argc,argv,(char *)"m!",MyOpt,sizeof(MyOpt),'-'))!=-1)
+    struct ax_lopt long[] = {{"one", ARGSX_NOARG, 0},
+			 {"two", ARGSX_REQ_ARG, 1},
+			 {"three", ARGSX_NOARG, 't'}};
+    int opt;
+    while((opt = ArgsX(argc, argv, "abct!e!", long, sizeof(long), '-')) != -1)
     {
-      switch(Rchar)
+      switch(opt)
       {
-        case ARGSX_LOPT:
-            if(ax_loptidx==0)
-            {
-                ...
-            }
-            else if(ax_loptidx==1)
-                ...
+      	case 0:
+	// --one
+	break;
+	case 1:
+	// --two
+	break;
+        case 'a':
         break;
-        case 'm':
-        // -m or --make
+	case 'b':
+        break;
+        case 't':
+        // -t or --three
         break;
         case ARGSX_BAD_OPT:
-        ...
         break;
         case ARGSX_FEW_ARGS:
-        ...
         break;
         case ARGSX_NONOPT:
-        ...
         break;
       }
     }
