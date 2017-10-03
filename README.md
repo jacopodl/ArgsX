@@ -15,9 +15,9 @@ struct ax_lopt {
     char opt;	// Return value
 }
 
-struct ax_lopt long[] = {{"one", ARGSX_NOARG, 0},
-			 {"two", ARGSX_REQ_ARG, 1},
-			 {"three", ARGSX_NOARG, 't'}};
+struct ax_lopt longOpt[] = {{"one", ARGSX_NOARG, 0},
+			    {"two", ARGSX_REQ_ARG, 1},
+			    {"three", ARGSX_NOARG, 't'}};
 ```
 ## Short option ##
 Short option required string formatted in this way:
@@ -39,11 +39,11 @@ For example, if your program require options 'a','b','c' without parameter and o
 ```
 ## Put all together ##
 ```c++
-    struct ax_lopt long[] = {{"one", ARGSX_NOARG, 0},
-			 {"two", ARGSX_REQ_ARG, 1},
-			 {"three", ARGSX_NOARG, 't'}};
+struct ax_lopt longOpt[] = {{"one", ARGSX_NOARG, 0},
+			    {"two", ARGSX_REQ_ARG, 1},
+			    {"three", ARGSX_NOARG, 't'}};
     int opt;
-    while((opt = ArgsX(argc, argv, "abct!e!", long, sizeof(long), '-')) != -1)
+    while((opt = ArgsX(argc, argv, "abct!e!", longOpt, sizeof(longOpt), '-')) != -1)
     {
       switch(opt)
       {
